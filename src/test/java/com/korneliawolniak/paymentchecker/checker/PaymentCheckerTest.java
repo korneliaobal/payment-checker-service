@@ -59,7 +59,10 @@ class PaymentCheckerTest {
 
     verify(publisher).publish(captor.capture());
 
-    assertEquals("NOT_OK", captor.getValue().getStatus().toString());
+    assertEquals("NOT_OK", String.valueOf(captor.getValue().getStatus()));
+    assertEquals(
+        java.util.List.of("DEBTOR_NAME_REQUIRED"),
+        captor.getValue().getReasonCodes().stream().map(Object::toString).toList());
   }
 
   @Test
@@ -80,7 +83,10 @@ class PaymentCheckerTest {
 
     verify(publisher).publish(captor.capture());
 
-    assertEquals("NOT_OK", captor.getValue().getStatus().toString());
+    assertEquals("NOT_OK", String.valueOf(captor.getValue().getStatus()));
+    assertEquals(
+        java.util.List.of("DEBTOR_ACCOUNT_INVALID"),
+        captor.getValue().getReasonCodes().stream().map(Object::toString).toList());
   }
 
   @Test
@@ -101,6 +107,9 @@ class PaymentCheckerTest {
 
     verify(publisher).publish(captor.capture());
 
-    assertEquals("NOT_OK", captor.getValue().getStatus().toString());
+    assertEquals("NOT_OK", String.valueOf(captor.getValue().getStatus()));
+    assertEquals(
+        java.util.List.of("TRANSACTION_COUNT_OUT_OF_RANGE"),
+        captor.getValue().getReasonCodes().stream().map(Object::toString).toList());
   }
 }
